@@ -16,7 +16,7 @@ public class Category {
 
     @Column(nullable = false, unique = true)
     private String name;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy ="category")
     private Set<Product> products = new HashSet<>();
 
     public Category(Integer id, String name) {

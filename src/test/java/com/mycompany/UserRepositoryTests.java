@@ -19,11 +19,7 @@ public class UserRepositoryTests {
 
     @Test
     public void testAddNew() {
-        User user = new User();
-        user.setEmail("alex.stevenson@gmail.com");
-        user.setPassword("alex123456");
-        user.setFirstName("Alex");
-        user.setLastName("Stevenson");
+        User user = new User(null, "myemail@gmail.com", "13998877513", "John Doe", "04618463512");
 
         User savedUser = repo.save(user);
 
@@ -46,11 +42,11 @@ public class UserRepositoryTests {
         Integer userId = 1;
         Optional<User> optionalUser = repo.findById(userId);
         User user = optionalUser.get();
-        user.setPassword("hello2000");
+        user.setName("John Smithens");
         repo.save(user);
 
         User updatedUser = repo.findById(userId).get();
-        Assertions.assertThat(updatedUser.getPassword()).isEqualTo("hello2000");
+        Assertions.assertThat(updatedUser.getName()).isEqualTo("John Smithens");
     }
 
     @Test

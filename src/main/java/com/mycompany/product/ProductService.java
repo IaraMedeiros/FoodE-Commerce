@@ -1,9 +1,5 @@
 package com.mycompany.product;
-import com.mycompany.category.Category;
-import com.mycompany.category.CategoryNotFoundException;
-import com.mycompany.category.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

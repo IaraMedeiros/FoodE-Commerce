@@ -1,6 +1,13 @@
 package com.mycompany.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mycompany.product.Product;
+import com.mycompany.rating.Rating;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -12,16 +19,28 @@ public class User {
     @Column(nullable = false, unique = true, length = 45)
     private String email;
 
-    @Column(length = 15, nullable = false)
-    private String password;
+    @Column(nullable = false, unique = true, length = 11)
+    private String phone;
 
-    @Column(length = 45, nullable = false, name = "first_name")
-    private String firstName;
+    @Column(length = 50, nullable = false)
+    private String name;
 
-    @Column(length = 45, nullable = false, name = "last_name")
-    private String lastName;
+    @Column(length = 11, nullable = false)
+    private String CPF;
+    @JsonIgnore
+    @OneToMany(mappedBy="user")
+    private Set<Rating> ratings = new HashSet<>();
 
-    private boolean enabled;
+    public User(Integer id, String email, String phone, String name, String CPF) {
+        this.id = id;
+        this.email = email;
+        this.phone = phone;
+        this.name = name;
+        this.CPF = CPF;
+    }
+
+    public User() {
+    }
 
     public Integer getId() {
         return id;
@@ -39,28 +58,49 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getCPF() {
+        return CPF;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
+    }
+
+    public Set<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(CPF, user.CPF);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, CPF);
     }
 
     @Override
@@ -68,18 +108,9 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", name='" + name + '\'' +
+                ", CPF='" + CPF + '\'' +
                 '}';
-    }
-
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 }

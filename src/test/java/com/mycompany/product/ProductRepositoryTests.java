@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 

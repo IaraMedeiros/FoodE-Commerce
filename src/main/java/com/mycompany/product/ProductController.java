@@ -1,8 +1,5 @@
 package com.mycompany.product;
 
-import com.mycompany.category.Category;
-import com.mycompany.category.CategoryNotFoundException;
-import com.mycompany.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,8 +21,8 @@ public class ProductController {
 
     @GetMapping(value = "t/products/{id}")
     public ResponseEntity<Product> findById(@PathVariable Integer id) throws ProductNotFoundException {
-        Product category = service.get(id);
-        return ResponseEntity.ok().body(category);
+        Product product = service.get(id);
+        return ResponseEntity.ok().body(product);
     }
 
 

@@ -1,6 +1,5 @@
 package com.mycompany.product;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mycompany.category.Category;
 import jakarta.persistence.*;
 
