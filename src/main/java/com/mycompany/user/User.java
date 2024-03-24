@@ -1,9 +1,11 @@
 package com.mycompany.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mycompany.order.Order;
 import com.mycompany.product.Product;
 import com.mycompany.rating.Rating;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.ObjectProvider;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -27,6 +29,9 @@ public class User {
 
     @Column(length = 11, nullable = false)
     private String CPF;
+    @JsonIgnore
+    @OneToMany(mappedBy ="user")
+    private Set<Order> products = new HashSet<>();
     @JsonIgnore
     @OneToMany(mappedBy="user")
     private Set<Rating> ratings = new HashSet<>();

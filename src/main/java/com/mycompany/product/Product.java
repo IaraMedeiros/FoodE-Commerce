@@ -1,9 +1,12 @@
 package com.mycompany.product;
 
+import com.mycompany.OrderItem.OrderItem;
 import com.mycompany.category.Category;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="tb_product")
@@ -24,6 +27,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Product() {
     }
