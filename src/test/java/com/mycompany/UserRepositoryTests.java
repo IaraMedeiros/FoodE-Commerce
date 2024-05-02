@@ -1,7 +1,7 @@
 package com.mycompany;
 
-import com.mycompany.user.User;
-import com.mycompany.user.UserRepository;
+import com.mycompany.entities.User;
+import com.mycompany.repositories.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

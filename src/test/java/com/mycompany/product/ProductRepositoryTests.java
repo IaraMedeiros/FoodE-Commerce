@@ -1,7 +1,9 @@
 package com.mycompany.product;
 
-import com.mycompany.category.Category;
-import com.mycompany.category.CategoryRepository;
+import com.mycompany.entities.Category;
+import com.mycompany.repositories.CategoryRepository;
+import com.mycompany.entities.Product;
+import com.mycompany.repositories.ProductRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

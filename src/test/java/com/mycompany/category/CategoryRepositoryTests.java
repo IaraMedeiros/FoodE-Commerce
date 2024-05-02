@@ -1,5 +1,7 @@
 package com.mycompany.category;
 
+import com.mycompany.entities.Category;
+import com.mycompany.repositories.CategoryRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

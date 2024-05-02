@@ -1,11 +1,13 @@
 package com.mycompany.order;
 
-import com.mycompany.OrderItem.OrderItem;
-import com.mycompany.OrderItem.OrderItemRepository;
-import com.mycompany.enums.OrderStatus;
-import com.mycompany.product.Product;
-import com.mycompany.product.ProductRepository;
-import com.mycompany.user.UserRepository;
+import com.mycompany.repositories.OrderRepository;
+import com.mycompany.entities.OrderItem;
+import com.mycompany.repositories.OrderItemRepository;
+import com.mycompany.entities.Order;
+import com.mycompany.entities.enums.OrderStatus;
+import com.mycompany.entities.Product;
+import com.mycompany.repositories.ProductRepository;
+import com.mycompany.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
