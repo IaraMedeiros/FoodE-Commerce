@@ -1,5 +1,6 @@
 package com.mycompany.category;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mycompany.product.Product;
 import jakarta.persistence.*;
 
@@ -16,6 +17,8 @@ public class Category {
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    @JsonIgnore
     @OneToMany(mappedBy ="category")
     private Set<Product> products = new HashSet<>();
 

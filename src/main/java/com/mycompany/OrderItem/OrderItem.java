@@ -12,9 +12,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "tb_order_item")
-public class OrderItem implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class OrderItem {
     @EmbeddedId
     private OrderItemPK id = new OrderItemPK();
 
@@ -32,11 +30,6 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
-    public Double getSubtotal(){
-        return price * quantity;
-
-    }
-
     @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
@@ -45,6 +38,7 @@ public class OrderItem implements Serializable {
     public void setOrder(Order order) {
         id.setOrder(order);
     }
+
     public Product getProduct() {
         return id.getProduct();
     }
@@ -67,10 +61,6 @@ public class OrderItem implements Serializable {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public Double getSubTotal() {
-        return price * quantity;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.mycompany;
+package com.mycompany.enums;
 
 public enum OrderStatus {
     WAITING_PAYMENT(1),
@@ -24,6 +24,7 @@ public enum OrderStatus {
                 return value;
             }
         }
-        throw new IllegalAccessException("Ese orderstatus é invalido");
+        throw new IllegalAccessException("Esse orderstatus é invalido");
     }
 }
+

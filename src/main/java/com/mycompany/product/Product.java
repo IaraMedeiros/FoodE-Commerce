@@ -1,5 +1,6 @@
 package com.mycompany.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mycompany.OrderItem.OrderItem;
 import com.mycompany.category.Category;
 import jakarta.persistence.*;
@@ -23,13 +24,15 @@ public class Product {
 
     @Column(nullable = false, unique = false)
     private Double price;
-    
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "id.product")
     private Set<OrderItem> items = new HashSet<>();
+
 
     public Product() {
     }
@@ -74,6 +77,22 @@ public class Product {
         this.price = price;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<OrderItem> items) {
+        this.items = items;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,6 +100,8 @@ public class Product {
         Product product = (Product) o;
         return Objects.equals(id, product.id) && Objects.equals(name, product.name);
     }
+
+
 
     @Override
     public int hashCode() {

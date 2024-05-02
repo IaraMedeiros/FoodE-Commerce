@@ -15,13 +15,13 @@ import java.util.List;
 public class OrderController {
     @Autowired private OrderService service;
 
-    @GetMapping(value="t/categories")
+    @GetMapping(value="t/orders")
     public ResponseEntity<List<Order>> findAll(){
         List<Order> list = service.listAll();
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping(value = "t/categories/{id}")
+    @GetMapping(value = "t/orders/{id}")
     public ResponseEntity<Order> findById(@PathVariable Integer id) throws OrderNotFoundException {
         Order order = service.get(id);
         return ResponseEntity.ok().body(order);

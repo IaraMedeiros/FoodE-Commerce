@@ -27,10 +27,10 @@ public class ProductRepositoryTests {
    @Test
     public void testAddNew() throws IOException{
 
-       Optional<Category> optionalCategory = categoryRepository.findById(1);
+       Optional<Category> optionalCategory = categoryRepository.findById(2);
        Category category = optionalCategory.get();
 
-        Product product = new Product(null,"Guaraná 600ml","Garrafa de guaraná contendo 600ml", 6.00,
+        Product product = new Product(null,"Coca-Cola 350ml","Lata de coca-cola 350ml", 5.00,
                 category);
 
        Set<Product> products = category.getProducts();
@@ -73,7 +73,7 @@ public class ProductRepositoryTests {
 
     @Test
     public void testDelete(){
-        Integer productId = 2;
+        Integer productId = 3;
         repo.deleteById(productId);
         Optional<Product> optionalProduct = repo.findById(productId);
         Assertions.assertThat(optionalProduct).isNotPresent();

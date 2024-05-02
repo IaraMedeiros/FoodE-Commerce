@@ -29,12 +29,13 @@ public class User {
 
     @Column(length = 11, nullable = false)
     private String CPF;
-    @JsonIgnore
-    @OneToMany(mappedBy ="user")
-    private Set<Order> products = new HashSet<>();
-    @JsonIgnore
+
+
     @OneToMany(mappedBy="user")
     private Set<Rating> ratings = new HashSet<>();
+
+    @OneToMany(mappedBy ="costumer")
+    private Set<Order> orders = new HashSet<>();
 
     public User(Integer id, String email, String phone, String name, String CPF) {
         this.id = id;
@@ -95,6 +96,15 @@ public class User {
         this.ratings = ratings;
     }
 
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -119,3 +129,4 @@ public class User {
                 '}';
     }
 }
+
