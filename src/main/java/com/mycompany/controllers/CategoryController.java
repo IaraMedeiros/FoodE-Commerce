@@ -15,7 +15,7 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired private CategoryService service;
-
+// ytest commentary
     @GetMapping(value="t/categories")
     public ResponseEntity<List<Category>> findAll(){
         List<Category> list = service.listAll();
