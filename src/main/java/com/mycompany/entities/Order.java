@@ -34,6 +34,9 @@ public class Order {
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
 
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Shipping shipping;
+
     public Order() {
     }
 
