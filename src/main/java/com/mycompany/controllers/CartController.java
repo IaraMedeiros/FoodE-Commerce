@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-//import javax.servlets.http.HttpSession;
+import javax.servlets.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,11 +53,37 @@ public class CartController {
 
     @GetMapping("/checkout")
     public String checkout(@ModelAttribute("cartItems") List<CartItem> cartItems, HttpSession session) {
-        // Lógica para finalizar o pedido (conversão dos itens do carrinho em um pedido)
-        // Salvar o pedido no banco de dados
-        // Exemplo simplificado: limpar o carrinho (remover itens da sessão)
+         Order order = new Order(null);
+         List<OrderItem> orderItems = new List();
+
+
+        For(CartItem ct: cartItems){
+          OrderItem oi = new orderItem(TODAS AS VARIAVEIS DO CARTITEM)
+          orderItems.add(oi);
+          orderItemRepository.save(oi)
+        }
+
+        order.setMoment(Instant.now());
+        order.setOrderStatus(OrderStatus.WAITING_PAYMENT);
+        order.setCostumer(null);
+
+        For(OrderItem oi: orderItems){
+          order.getItems().add(oi);
+        }
+
+        order.setValor(order.getSubTotal());
+
+        Order savedOrder = orderRepo.save(order);
+
+        Order retrievedOrder = orderRepo.findById(savedOrder.getId()).orElse(null);
+
+        assertThat(savedOrder).isNotNull();
+        assertThat(savedOrder.getId()).isNotNull();
+        assertThat(savedOrder.getId()).isGreaterThan(0);
+        assertThat(savedOrder.getItems().size()).isEqualTo(2);
+
         session.removeAttribute("cartItems");
         return "checkout";
     }
 }
- */
+*/
