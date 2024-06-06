@@ -1,11 +1,13 @@
 package com.mycompany.controllers;
 
+import com.mycompany.entities.User;
 import com.mycompany.exceptions.CategoryNotFoundException;
 import com.mycompany.services.CategoryService;
 import com.mycompany.entities.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -15,7 +17,7 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired private CategoryService service;
-// ytest commentary
+
     @GetMapping(value="t/categories")
     public ResponseEntity<List<Category>> findAll(){
         List<Category> list = service.listAll();
@@ -26,6 +28,14 @@ public class CategoryController {
     public ResponseEntity<Category> findById(@PathVariable Integer id) throws CategoryNotFoundException {
         Category category = service.get(id);
         return ResponseEntity.ok().body(category);
+    }
+
+    @GetMapping("/categories")
+    public String showUserList(Model model) {
+        List<Category> listCategories = service.listAll();
+        model.addAttribute("listCategory", listCategories);
+
+        return "categories/categories";
     }
 
 }

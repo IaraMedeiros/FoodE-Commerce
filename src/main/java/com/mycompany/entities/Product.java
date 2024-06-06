@@ -23,23 +23,30 @@ public class Product {
     @Column(nullable = false, unique = false)
     private Double price;
 
+
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB",nullable = true, unique = true)
+    private byte[] img;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
+
     @JsonIgnore
-    @OneToMany(mappedBy = "id.product")
+    @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<OrderItem> items = new HashSet<>();
 
 
     public Product() {
     }
 
-    public Product(Integer id, String name, String description, Double price, Category category) {
+    public Product(Integer id, String name, String description, Double price, byte[] img, Category category) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.img = img;
         this.category = category;
     }
 
@@ -69,6 +76,14 @@ public class Product {
 
     public Double getPrice() {
         return price;
+    }
+
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
     }
 
     public void setPrice(Double price) {

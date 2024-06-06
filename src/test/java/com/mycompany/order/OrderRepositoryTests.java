@@ -8,6 +8,7 @@ import com.mycompany.entities.enums.OrderStatus;
 import com.mycompany.entities.Product;
 import com.mycompany.repositories.ProductRepository;
 import com.mycompany.repositories.UserRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -79,4 +80,12 @@ public class OrderRepositoryTests {
         assertThat(savedOrder.getItems().size()).isEqualTo(2);
     }
 
+
+    @Test
+    public void testDelete(){
+        Integer orderId = 4;
+        orderRepo.deleteById(orderId);
+        Optional<Order> optionalOrder = orderRepo.findById(orderId);
+        Assertions.assertThat(optionalOrder).isNotPresent();
+    }
 }

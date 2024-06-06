@@ -1,11 +1,11 @@
-package com.mycompany.controllers;
+/*package com.mycompany.controllers;
 
 import com.mycompany.entities.CartItem;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlets.http.HttpSession;
+//import javax.servlets.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,3 +60,4 @@ public class CartController {
         return "checkout";
     }
 }
+ */
