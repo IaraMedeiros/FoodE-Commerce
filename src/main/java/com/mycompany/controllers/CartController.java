@@ -1,17 +1,27 @@
-/*package com.mycompany.controllers;
+package com.mycompany.controllers;
 
 import com.mycompany.entities.CartItem;
+import com.mycompany.entities.Order;
+import com.mycompany.entities.OrderItem;
+import com.mycompany.entities.Product;
+import com.mycompany.entities.enums.OrderStatus;
+import com.mycompany.repositories.OrderItemRepository;
+import com.mycompany.repositories.OrderRepository;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlets.http.HttpSession;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @SessionAttributes("cartItems")
 public class CartController {
+    @Autowired OrderItemRepository orderItemRepository;
+    @Autowired OrderRepository orderRepository;
     @ModelAttribute("cartItems")
     public List<CartItem> getCartItems() {
         return new ArrayList<>();
@@ -19,16 +29,11 @@ public class CartController {
 
     @GetMapping("/add-to-cart/{productId}")
     public String addToCart(@PathVariable("productId") Long productId,
-                            @RequestParam("productName") String productName,
+                            @RequestParam("product") Product product,
                             @RequestParam("unitPrice") double unitPrice,
                             @RequestParam("quantity") int quantity,
                             @ModelAttribute("cartItems") List<CartItem> cartItems) {
-        CartItem newItem = new CartItem();
-        newItem.setProductId(productId);
-        newItem.setProductName(productName);
-        newItem.setUnitPrice(unitPrice);
-        newItem.setQuantity(quantity);
-
+        CartItem newItem = new CartItem(product,quantity,unitPrice);
         cartItems.add(newItem);
 
         return "redirect:/cart";
@@ -52,38 +57,34 @@ public class CartController {
     }
 
     @GetMapping("/checkout")
-    public String checkout(@ModelAttribute("cartItems") List<CartItem> cartItems, HttpSession session) {
+    public String checkout(@ModelAttribute("cartItems") List<CartItem> cartItems,  HttpSession session) {
          Order order = new Order(null);
-         List<OrderItem> orderItems = new List();
+         List<OrderItem> orderItems =  new ArrayList<>();
 
 
-        For(CartItem ct: cartItems){
-          OrderItem oi = new orderItem(TODAS AS VARIAVEIS DO CARTITEM)
+        for (CartItem ct: cartItems){
+          OrderItem oi = new OrderItem(order,ct.getProduct(),ct.getQuantity(),ct.getUnitPrice());
           orderItems.add(oi);
-          orderItemRepository.save(oi)
+          orderItemRepository.save(oi);
         }
 
         order.setMoment(Instant.now());
         order.setOrderStatus(OrderStatus.WAITING_PAYMENT);
         order.setCostumer(null);
 
-        For(OrderItem oi: orderItems){
+        for(OrderItem oi: orderItems){
           order.getItems().add(oi);
         }
 
         order.setValor(order.getSubTotal());
 
-        Order savedOrder = orderRepo.save(order);
+        Order savedOrder = orderRepository.save(order);
 
-        Order retrievedOrder = orderRepo.findById(savedOrder.getId()).orElse(null);
+        Order retrievedOrder = orderRepository.findById(savedOrder.getId()).orElse(null);
 
-        assertThat(savedOrder).isNotNull();
-        assertThat(savedOrder.getId()).isNotNull();
-        assertThat(savedOrder.getId()).isGreaterThan(0);
-        assertThat(savedOrder.getItems().size()).isEqualTo(2);
 
         session.removeAttribute("cartItems");
         return "checkout";
     }
 }
-*/
+

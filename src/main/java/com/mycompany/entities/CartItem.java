@@ -1,32 +1,22 @@
 package com.mycompany.entities;
 
 public class CartItem {
-    private Long productId;
-    private String productName;
+    private Product product;
     private int quantity;
     private double unitPrice;
 
-    public CartItem(Long productId, String productName, int quantity, double unitPrice) {
-        this.productId = productId;
-        this.productName = productName;
+    public CartItem(Product product, int quantity, double unitPrice) {
+        this.product = product;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getQuantity() {

@@ -23,7 +23,7 @@ public class CategoryRepositoryTests {
     @Test
     public void testAddNew() throws IOException{
 
-        Category category = new Category(null, "Sobremesas");
+        Category category = new Category(null, "Entradas");
 
         Category savedCategory = repo.save(category);
 
