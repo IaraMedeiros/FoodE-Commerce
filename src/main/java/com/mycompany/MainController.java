@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
@@ -24,11 +25,14 @@ public class MainController {
         return "dashboard";
     }
 
-    @GetMapping(value="/menu")
-    public String showMainMenu(Model model){
+    @GetMapping("/menu")
+    public String showMainMenu(Model model, @ModelAttribute("message") String message) {
         List<Category> listCategories = categoService.listAll();
         model.addAttribute("listCategories", listCategories);
-
+        if (message != null) {
+            model.addAttribute("message", message);
+        }
         return "menu";
     }
+
 }

@@ -85,7 +85,7 @@ public class UserController {
     }
 
     @PostMapping("/checkout/save")
-    public String processCheckout(User user, HttpSession session) {
+    public String processCheckout(User user, HttpSession session, RedirectAttributes redirectAttributes) {
         service.save(user);
 
         // Retrieve the order from the session
@@ -94,12 +94,9 @@ public class UserController {
             order.setCostumer(user);
             order.setOrderStatus(OrderStatus.WAITING_PAYMENT);
             orderRepository.save(order);
-
-            // Clear the order from the session
-            session.removeAttribute("order");
         }
 
-        return "orderConfirmation";
+        return "redirect:/order-confirmation";
     }
 }
 
