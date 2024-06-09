@@ -17,8 +17,7 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @JsonIgnore
-    @OneToMany(mappedBy ="category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private Set<Product> products = new HashSet<>();
 
     public Category(Integer id, String name) {
@@ -72,7 +71,6 @@ public class Category {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", products=" + products +
                 '}';
     }
 }

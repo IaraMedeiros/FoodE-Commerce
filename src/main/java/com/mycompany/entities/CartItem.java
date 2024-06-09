@@ -34,4 +34,13 @@ public class CartItem {
     public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
+
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "product=" + product +
+                ", quantity=" + quantity +
+                ", unitPrice=" + unitPrice +
+                '}';
+    }
 }

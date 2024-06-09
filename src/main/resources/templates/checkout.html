@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Checkout</h2>
+    <form th:action="@{/checkout/save}" th:object="${user}" method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" th:field="*{email}" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="phone">Telefone</label>
+            <input type="text" id="phone" th:field="*{phone}" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="CPF">Telefone</label>
+            <input type="text" id="CPF" th:field="*{CPF}" class="form-control"/>
+        </div>
+        <!-- Add other fields as needed -->
+        <button type="submit" class="btn btn-primary">Complete Order</button>
+    </form>
+</div>
+</body>
+</html>

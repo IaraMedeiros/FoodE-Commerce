@@ -1,13 +1,19 @@
 package com.mycompany.controllers;
 
+
+import com.mycompany.repositories.OrderRepository;
+import com.mycompany.entities.Order;
 import com.mycompany.entities.User;
+import com.mycompany.entities.enums.OrderStatus;
 import com.mycompany.exceptions.UserNotFoundException;
 import com.mycompany.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -17,19 +23,8 @@ import java.util.List;
 @Controller
 public class UserController {
     @Autowired private UserService service;
+    @Autowired private OrderRepository orderRepository;
 
-    @GetMapping(value="/t/users")
-    public ResponseEntity<List<User>> findAll(){
-        List<User> list = service.listAll();
-        return ResponseEntity.ok().body(list);
-    }
-
-    @GetMapping(value = "t/users/{id}")
-    public ResponseEntity<User> findById(@PathVariable Integer id) throws UserNotFoundException {
-        User user = service.get(id);
-        return ResponseEntity.ok().body(user);
-    }
-    
     @GetMapping("/users")
     public String showUserList(Model model) {
         List<User> listUsers = service.listAll();
@@ -76,4 +71,35 @@ public class UserController {
         }
         return "redirect:/users";
     }
+
+    @GetMapping("/checkout/details")
+    public String showCheckoutForm(Model model, HttpSession session, @ModelAttribute("order") Order order) {
+        if (order == null) {
+            order = (Order) session.getAttribute("order");
+        }
+
+        model.addAttribute("user", new User());
+        model.addAttribute("order", order);
+
+        return "/checkout";
+    }
+
+    @PostMapping("/checkout/save")
+    public String processCheckout(User user, HttpSession session) {
+        service.save(user);
+
+        // Retrieve the order from the session
+        Order order = (Order) session.getAttribute("order");
+        if (order != null) {
+            order.setCostumer(user);
+            order.setOrderStatus(OrderStatus.WAITING_PAYMENT);
+            orderRepository.save(order);
+
+            // Clear the order from the session
+            session.removeAttribute("order");
+        }
+
+        return "orderConfirmation";
+    }
 }
+

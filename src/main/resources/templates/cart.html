@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Your Cart</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item, iterStat : ${cartItems}">
+            <td th:text="${item.product.name}"></td>
+            <td th:text="${item.unitPrice}"></td>
+            <td th:text="${item.quantity}"></td>
+            <td th:text="${item.unitPrice * item.quantity}"></td>
+            <td>
+                <a th:href="@{/remove-from-cart/{index}(index=${iterStat.index})}" class="btn btn-danger">Remove</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h3>Total: <span th:text="${total}"></span></h3>
+    <a href="/checkout" class="btn btn-success">Checkout</a>
+</div>
+</body>
+</html>

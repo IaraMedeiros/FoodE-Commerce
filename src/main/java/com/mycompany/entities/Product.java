@@ -3,6 +3,7 @@ package com.mycompany.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -23,7 +24,6 @@ public class Product {
     @Column(nullable = false, unique = false)
     private Double price;
 
-
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB",nullable = true, unique = true)
     private byte[] img;
@@ -33,9 +33,9 @@ public class Product {
     @JoinColumn(name="category_id")
     private Category category;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "id.product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<OrderItem> items = new HashSet<>();
+
 
 
     public Product() {
@@ -114,7 +114,16 @@ public class Product {
         return Objects.equals(id, product.id) && Objects.equals(name, product.name);
     }
 
-
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", category=" + category +
+                '}';
+    }
 
     @Override
     public int hashCode() {

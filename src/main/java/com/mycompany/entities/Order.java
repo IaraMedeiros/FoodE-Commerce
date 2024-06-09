@@ -121,5 +121,19 @@ public class Order {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", valor=" + valor +
+                ", orderStatus=" + orderStatus +
+                ", costumer=" + costumer +
+                ", moment=" + moment +
+                ", items=" + items +
+                ", payment=" + payment +
+                ", shipping=" + shipping +
+                '}';
+    }
 }
 

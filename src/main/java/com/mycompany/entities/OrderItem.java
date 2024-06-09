@@ -82,4 +82,13 @@ public class OrderItem {
             return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
+    }
 }
