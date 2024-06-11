@@ -1,6 +1,7 @@
 package com.mycompany.controllers;
 
 
+import com.mycompany.entities.CheckoutDTO;
 import com.mycompany.repositories.OrderRepository;
 import com.mycompany.entities.Order;
 import com.mycompany.entities.User;
@@ -81,22 +82,8 @@ public class UserController {
         model.addAttribute("user", new User());
         model.addAttribute("order", order);
 
+
         return "/checkout";
-    }
-
-    @PostMapping("/checkout/save")
-    public String processCheckout(User user, HttpSession session, RedirectAttributes redirectAttributes) {
-        service.save(user);
-
-        // Retrieve the order from the session
-        Order order = (Order) session.getAttribute("order");
-        if (order != null) {
-            order.setCostumer(user);
-            order.setOrderStatus(OrderStatus.WAITING_PAYMENT);
-            orderRepository.save(order);
-        }
-
-        return "redirect:/order-confirmation";
     }
 }
 

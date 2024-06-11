@@ -25,7 +25,6 @@ public class User {
     @Column(length = 11, nullable = true)
     private String CPF;
 
-
     @OneToMany(mappedBy="user")
     private Set<Rating> ratings = new HashSet<>();
 

@@ -13,6 +13,12 @@ public class Shipping {
 
     private Date timeExpected;
 
+    private String adress;
+
+    private String city;
+
+    private String state;
+
     @OneToOne
     @MapsId
     private Order order;
@@ -48,5 +54,29 @@ public class Shipping {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

@@ -1,4 +1,8 @@
 package com.mycompany.repositories;
 
-public class PaymentRepository {
+import com.mycompany.entities.Payment;
+import org.springframework.data.repository.CrudRepository;
+
+public interface PaymentRepository extends CrudRepository<Payment, Integer> {
+    public Long countById(Integer id);
 }

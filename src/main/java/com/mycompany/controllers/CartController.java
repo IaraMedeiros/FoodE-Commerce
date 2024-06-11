@@ -102,6 +102,7 @@ public class CartController {
 
         model.addAttribute("user", new User());
         model.addAttribute("order", order);
+        model.addAttribute("checkoutDTO", new CheckoutDTO());
 
         return "checkout";
     }

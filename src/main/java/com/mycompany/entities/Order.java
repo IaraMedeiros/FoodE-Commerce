@@ -107,7 +107,21 @@ public class Order {
         this.items = items;
     }
 
+    public Payment getPayment() {
+        return payment;
+    }
 
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public Shipping getShipping() {
+        return shipping;
+    }
+
+    public void setShipping(Shipping shipping) {
+        this.shipping = shipping;
+    }
 
     @Override
     public boolean equals(Object o) {
