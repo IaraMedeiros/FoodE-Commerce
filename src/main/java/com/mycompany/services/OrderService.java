@@ -36,6 +36,10 @@ public class OrderService {
         }
         repo.deleteById(id);
     }
+
+    public List<Order> activeOrders(){
+        return repo.AllActiveOrders();
+    }
 }
 
 

@@ -1,10 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Manage Users</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"  />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        .full-height {
+            height: 100%;
+        }
+        .sidebar {
+            background-color: #343a40;
+            color: white;
+        }
+        .sidebar a {
+            color: white;
+        }
+        .content {
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 
+
+<div class="container-fluid full-height">
+    <div class="row full-height">
+        <nav class="col-2 sidebar d-flex flex-column vh-100">
+            <h2 class="text-center">Lanchonete Rainha do Hamburger</h2>
+            <ul class="nav flex-column">
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pedidos Ativos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Categorias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/products}">Produtos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Historico de Entrega</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Clientes</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Historico de Pedidos</a>
+                </li>
+            </ul>
+        </nav>
+        <main class="col-10 content">
+            <div class="container">
+                <h1>Produtos</h1>
+                <input class="form-control mb-3" type="text" placeholder="Nome ou valor a ser pesquisado">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Preço</th>
+                        <th>Imagem</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="order : ${listOrder}">
+                        <tr>
+                            <td>[[${order.id}]]</td>
+                            <td>[[${order.valor}]]</td>
+                            <td>[[${order.id}]]</td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+                <a class="h3" th:href="@{/products/new}">Cadastrar novo produto</a>
+            </div>
+        </main>
+    </div>
+</div>
+
 </body>
 </html>
+

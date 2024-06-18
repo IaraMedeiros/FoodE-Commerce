@@ -1,5 +1,6 @@
 package com.mycompany.controllers;
 
+import com.mycompany.entities.Product;
 import com.mycompany.exceptions.OrderNotFoundException;
 import com.mycompany.services.OrderService;
 import com.mycompany.entities.Order;
@@ -38,6 +39,14 @@ public class OrderController {
         }
         model.addAttribute("order", order);
         return "orderConfirmation";
+    }
+
+    @GetMapping("/active-orders")
+    public String showActiveOrders(Model model) {
+        List<Order> listOrder = service.activeOrders();
+        model.addAttribute("listOrder", listOrder);
+
+        return "orders/orders";
     }
 
 }

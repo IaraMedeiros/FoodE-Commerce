@@ -1,4 +1,5 @@
 package com.mycompany.services;
+import com.mycompany.entities.Order;
 import com.mycompany.exceptions.CategoryNotFoundException;
 import com.mycompany.entities.Category;
 import com.mycompany.repositories.CategoryRepository;
