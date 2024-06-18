@@ -10,6 +10,9 @@ import java.util.List;
 public interface OrderRepository extends CrudRepository<Order, Integer> {
     public Long countById(Integer id);
 
-    @Query("SELECT o FROM Order o  WHERE o.orderStatus < 5 order by o.id")
+    @Query("SELECT o FROM Order o  WHERE o.orderStatus < 4 order by o.id")
     List<Order> AllActiveOrders();
+
+    @Query("SELECT o FROM Order o  WHERE o.orderStatus = 4 order by o.id")
+    List<Order> AllPastOrders();
 }

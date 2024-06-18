@@ -1,5 +1,6 @@
 package com.mycompany.controllers;
 
+import com.mycompany.entities.OrderItem;
 import com.mycompany.entities.Product;
 import com.mycompany.exceptions.OrderNotFoundException;
 import com.mycompany.services.OrderService;
@@ -47,6 +48,14 @@ public class OrderController {
         model.addAttribute("listOrder", listOrder);
 
         return "orders/orders";
+    }
+
+    @GetMapping("/past-orders")
+    public String showPastOrders(Model model) {
+        List<Order> listOrder = service.pastOrders();
+        model.addAttribute("listOrder", listOrder);
+
+        return "orders/pastOrders";
     }
 
 }

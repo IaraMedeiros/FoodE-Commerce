@@ -40,6 +40,9 @@ public class OrderService {
     public List<Order> activeOrders(){
         return repo.AllActiveOrders();
     }
+    public List<Order> pastOrders(){
+        return repo.AllPastOrders();
+    }
 }
 
 

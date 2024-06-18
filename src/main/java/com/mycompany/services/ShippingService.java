@@ -1,5 +1,6 @@
 package com.mycompany.services;
 
+import com.mycompany.entities.Order;
 import com.mycompany.entities.Payment;
 import com.mycompany.entities.Shipping;
 import com.mycompany.exceptions.PaymentNotFoundException;
@@ -44,5 +45,9 @@ public class ShippingService {
         } else {
             throw new ShippingNotFoundException("Shipping not found with ID: " + id);
         }
+    }
+
+    public List<Shipping> pastShippings(){
+        return repo.finalizedShippings();
     }
 }
