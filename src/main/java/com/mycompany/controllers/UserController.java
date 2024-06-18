@@ -82,7 +82,6 @@ public class UserController {
         model.addAttribute("user", new User());
         model.addAttribute("order", order);
 
-
         return "/checkout";
     }
 }

@@ -10,20 +10,14 @@ public class Shipping {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    private Date timeExpected;
-
     private String adress;
-
     private String city;
-
     private String state;
-
+    private Date timeExpected;
     @OneToOne
-    @MapsId
     private Order order;
 
-    public Shipping() {
+public Shipping() {
     }
 
     public Shipping(Integer id, Date timeExpected, Order order) {
@@ -78,5 +72,17 @@ public class Shipping {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return "Shipping{" +
+                "id=" + id +
+                ", timeExpected=" + timeExpected +
+                ", adress='" + adress + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", order=" + order.getId() +
+                '}';
     }
 }

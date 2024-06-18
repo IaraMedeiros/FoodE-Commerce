@@ -7,8 +7,8 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("CARD")
 public class CardData extends PaymentData {
     private String name;
-    private String card_number;
-    private int security_code;
+    private String cardNumber;
+    private int securityCode;
     
     private String validity;
 
@@ -23,20 +23,20 @@ public class CardData extends PaymentData {
         this.name = name;
     }
 
-    public String getCard_number() {
-        return card_number;
+    public String getCardNumber() {
+        return cardNumber;
     }
 
-    public void setCard_number(String card_number) {
-        this.card_number = card_number;
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
-    public int getSecurity_code() {
-        return security_code;
+    public int getSecurityCode() {
+        return securityCode;
     }
 
-    public void setSecurity_code(int security_code) {
-        this.security_code = security_code;
+    public void setSecurityCode(int securityCode) {
+        this.securityCode = securityCode;
     }
 
     public String getValidity() {

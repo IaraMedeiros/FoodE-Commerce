@@ -2,12 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Checkout</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+    <script>
+        function togglePaymentFields() {
+            var paymentMethod = document.getElementById("paymentMethod").value;
+            var cardFields = document.getElementById("cardFields");
+            var pixFields = document.getElementById("pixFields");
+
+            cardFields.style.display = 'none';
+            pixFields.style.display = 'none';
+
+            if (paymentMethod === 'CARTAO_CREDITO' || paymentMethod === 'CARTAO_DEBITO' || paymentMethod === 'VOUCHER') {
+                cardFields.style.display = 'block';
+            } else if (paymentMethod === 'PIX') {
+                pixFields.style.display = 'block';
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="container">
     <h2>Checkout</h2>
     <form th:action="@{/checkout/save}" th:object="${checkoutDTO}" method="post">
-        <h3>User Information</h3>
+        <h3>Dados</h3>
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" id="name" th:field="*{user.name}" class="form-control"/>
@@ -25,29 +44,60 @@
             <input type="text" id="CPF" th:field="*{user.CPF}" class="form-control"/>
         </div>
 
-        <h3>Shipping Information</h3>
+        <h3>Entrega</h3>
         <div class="form-group">
-            <label for="address">Address</label>
+            <label for="address">Endereço</label>
             <input type="text" id="address" th:field="*{shipping.adress}" class="form-control"/>
         </div>
 
         <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" id="city" th:field="*{shipping.city}" class="form-control"/>
-        </div>
-
-        <div class="form-group">
-            <label for="address">Address</label>
+            <label for="address">Estado</label>
             <input type="text" id="state" th:field="*{shipping.state}" class="form-control"/>
         </div>
 
-
-        <h3>Payment Information</h3>
         <div class="form-group">
-            <label for="cardNumber">Card Number</label>
-            <input type="text" id="cardNumber" th:field="*{payment.}" class="form-control"/>
+            <label for="address">Cidade</label>
+            <input type="text" id="city" th:field="*{shipping.city}" class="form-control"/>
         </div>
-        <!-- Add other payment fields as needed -->
+
+        <h3>Pagamento</h3>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Forma de Pagamento:</label>
+            <div class="col-sm-8">
+                <select id="paymentMethod" th:field="*{paymentMethod}" class="form-control" required onchange="togglePaymentFields()">
+                    <option value="">Selecione a forma de pagamento</option>
+                    <option th:each="method : ${paymentMethods}" th:value="${method}" th:text="${method.name()}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div id="cardFields" style="display: none;">
+            <h4>Dados do Cartão</h4>
+            <div class="form-group">
+                <label for="cardName">Nome no Cartão</label>
+                <input type="text" id="cardName" th:field="*{cardData.name}" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="cardNumber">Número do Cartão</label>
+                <input type="text" id="cardNumber" th:field="*{cardData.cardNumber}" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="securityCode">Código de Segurança</label>
+                <input type="text" id="securityCode" th:field="*{cardData.securityCode}" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="validity">Validade</label>
+                <input type="text" id="validity" th:field="*{cardData.validity}" class="form-control"/>
+            </div>
+        </div>
+
+        <div id="pixFields" style="display: none;">
+            <h4>Dados do Pix</h4>
+            <div class="form-group">
+                <label for="pixKey">Chave Pix</label>
+                <input type="text" id="pixKey" th:field="*{pixData.chave_pix}" class="form-control"/>
+            </div>
+        </div>
 
         <button type="submit" class="btn btn-primary">Complete Order</button>
     </form>

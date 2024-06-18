@@ -2,6 +2,7 @@ package com.mycompany.controllers;
 
 import com.mycompany.entities.*;
 import com.mycompany.entities.enums.OrderStatus;
+import com.mycompany.entities.enums.PaymentMethod;
 import com.mycompany.repositories.OrderItemRepository;
 import com.mycompany.repositories.OrderRepository;
 import com.mycompany.repositories.ProductRepository;
@@ -74,6 +75,8 @@ public class CartController {
         Order order = new Order();
         List<OrderItem> orderItems = new ArrayList<>();
 
+        System.out.println(order);
+
         for (CartItem ct : cartItems) {
             OrderItem oi = new OrderItem(order, ct.getProduct(), ct.getQuantity(), ct.getUnitPrice());
             orderItems.add(oi);
@@ -100,9 +103,10 @@ public class CartController {
         cartItems.clear();
         session.setAttribute("cartItems", cartItems);
 
-        model.addAttribute("user", new User());
         model.addAttribute("order", order);
         model.addAttribute("checkoutDTO", new CheckoutDTO());
+        model.addAttribute("paymentMethods", PaymentMethod.values());
+
 
         return "checkout";
     }

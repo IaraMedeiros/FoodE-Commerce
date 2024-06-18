@@ -8,10 +8,11 @@ import java.util.Date;
 @Entity(name="tb_payment")
 public class Payment {
     @Id
-    private int id_pedido;
+    private int id;
     private double valor;
     private Date paymentDate;
 
+    @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
     @ManyToOne
@@ -19,15 +20,14 @@ public class Payment {
     private PaymentData paymentData;
 
     @OneToOne
-    @MapsId
     private Order order;
 
-    public int getId_pedido() {
-        return id_pedido;
+    public int getId() {
+        return id;
     }
 
-    public void setId_pedido(int id_pedido) {
-        this.id_pedido = id_pedido;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getValor() {
@@ -68,5 +68,17 @@ public class Payment {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "id=" + id +
+                ", valor=" + valor +
+                ", paymentDate=" + paymentDate +
+                ", paymentMethod=" + paymentMethod +
+                ", paymentData=" + paymentData +
+                ", order=" + order.getId() +
+                '}';
     }
 }
