@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
-@Entity(name="tb_payment")
+@Entity
+@Table(name="tb_payment")
 public class Payment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private double valor;
     private Date paymentDate;

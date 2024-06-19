@@ -6,18 +6,20 @@
 </head>
 <body>
 <div class="container">
-    <h1>Order Confirmation</h1>
+    <h1>Confirmação do Pedido </h1>
     <div th:if="${order != null}">
-        <h2>Order ID: <span th:text="${order.id}"></span></h2>
-        <h3>Total Price: R$ <span th:text="${order.valor}"></span></h3>
-        <h4>Order Items:</h4>
+        <h3>Valor do Pedido: R$ <span th:text="${order.valor}"></span></h3>
+        <h4>Itens do seu pedido:</h4>
         <ul>
             <li th:each="item : ${order.items}">
-                <p>Product: <span th:text="${item.product.name}"></span></p>
-                <p>Quantity: <span th:text="${item.quantity}"></span></p>
-                <p>Unit Price: R$ <span th:text="${item.price}"></span></p>
+                <p><span th:text="${item.product.name}"></span><p> <span th:text="${item.quantity}"></span> Preço: R$ <span th:text="${item.price}"></span></p>
             </li>
         </ul>
+
+        <h3>Informações da entrega:</h3>
+        <p><span th:text="${order.shipping.adress}"></span>,  <span th:text="${order.shipping.city}"></span> - <span th:text="${order.shipping.state}"></span></p>
+        <p> Expectativa de entrega: <span th:text="${#dates.format(order.shipping.timeExpected, 'MMM dd HH:mm:ss')}"></span></p>
+
     </div>
     <a href="/menu" class="btn btn-primary">Back to Menu</a>
 </div>

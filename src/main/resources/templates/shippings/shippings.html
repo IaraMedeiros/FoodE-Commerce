@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage Users</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"  />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
     <style>
         html, body {
             height: 100%;
@@ -25,8 +25,6 @@
     </style>
 </head>
 <body>
-
-
 <div class="container-fluid full-height">
     <div class="row full-height">
         <nav class="col-2 sidebar d-flex flex-column vh-100">
@@ -68,10 +66,10 @@
                     <tbody>
                     <th:block th:each="shipping : ${listShipping}">
                         <tr>
-                            <td>[[${shipping.adress}]]</td>
-                            <td>[[${shipping.city}]]</td>
-                            <td>[[${shipping.state}]]</td>
-                            <td>[[${shipping.order.id}]]</td>
+                            <td th:text="${shipping.adress}"></td>
+                            <td th:text="${shipping.city}"></td>
+                            <td th:text="${shipping.state}"></td>
+                            <td th:text="${shipping.order.id}"></td>
                         </tr>
                     </th:block>
                     </tbody>
@@ -80,6 +78,6 @@
         </main>
     </div>
 </div>
-
 </body>
 </html>
+

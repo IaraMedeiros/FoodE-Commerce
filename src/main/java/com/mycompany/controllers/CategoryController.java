@@ -34,7 +34,7 @@ public class CategoryController {
     }
 
     @GetMapping("/categories")
-    public String showUserList(Model model) {
+    public String showCategoryList(Model model) {
         List<Category> listCategories = service.listAll();
         model.addAttribute("listCategories", listCategories);
 

@@ -18,7 +18,7 @@ public class ShippingController {
 
     @GetMapping("/shippings")
     public String showShippings(Model model) {
-        List<Shipping> listShipping = service.pastShippings();
+        List<Shipping> listShipping = service.listAll();
         model.addAttribute("listShipping", listShipping);
 
         return "shippings/shippings";

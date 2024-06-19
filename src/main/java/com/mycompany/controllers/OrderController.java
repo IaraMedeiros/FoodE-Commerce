@@ -5,6 +5,7 @@ import com.mycompany.entities.Product;
 import com.mycompany.exceptions.OrderNotFoundException;
 import com.mycompany.services.OrderService;
 import com.mycompany.entities.Order;
+import com.mycompany.entities.enums.OrderStatus;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.util.List;
@@ -41,6 +43,20 @@ public class OrderController {
         model.addAttribute("order", order);
         return "orderConfirmation";
     }
+
+    @GetMapping("/order/change-status/{id}")
+    public String changeOrderStatus(@PathVariable("id") Integer id, Model model, RedirectAttributes ra, HttpSession session) throws OrderNotFoundException {
+        Order order = service.get(id);
+        Integer OSCode = order.getOrderStatus().getCode();
+        OSCode = OSCode + 1;
+        order.setOrderStatus(OrderStatus.values()[(OSCode)]);
+
+        service.save(order);
+
+        model.addAttribute("order", order);
+        return "redirect:/active-orders";
+    }
+
 
     @GetMapping("/active-orders")
     public String showActiveOrders(Model model) {

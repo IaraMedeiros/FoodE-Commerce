@@ -9,7 +9,4 @@ import java.util.List;
 
 public interface ShippingRepository extends CrudRepository<Shipping, Integer> {
     public Long countById(Integer id);
-
-    @Query("SELECT s FROM Shipping s  WHERE s.order.orderStatus = 4 order by s.id")
-    public List<Shipping> finalizedShippings();
 }

@@ -58,27 +58,29 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Valor</th>
-                        <th>Data e Hora</th>
+                        <th>Momento</th>
                         <th>Items</th>
                         <th>Status</th>
+                        <th>Alterar</th>
                     </tr>
                     </thead>
                     <tbody>
                     <th:block th:each="order : ${listOrder}">
                         <tr>
-                            <td>[[${order.id}]]</td>
-                            <td>[[${order.valor}]]</td>
-                            <td>[[${order.moment}]]</td>
+                            <td th:text="${order.id}"></td>
+                            <td th:text="${order.valor}"></td>
+                            <td th:text="${#dates.format(order.moment, 'MMM dd HH:mm:ss')}"></td>
                             <td>
                                 <ul>
-                                    <th:block th:each="item : ${order.getItems()}">
-                                        <li>[[${item.getProduct().getName()}]]</li>
+                                    <th:block th:each="item : ${order.items}">
+                                        <li th:text="${item.product.name}"></li>
                                     </th:block>
                                 </ul>
                             </td>
-                            <td>[[${order.orderStatus}]]</td>
+                            <td th:text="${order.orderStatus}"></td>
+                            <td> <a th:href="@{'/order/change-status/' + ${order.id}}">Próximo status</a>
                         </tr>
                     </th:block>
                     </tbody>
