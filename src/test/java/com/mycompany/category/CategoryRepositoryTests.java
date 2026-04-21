@@ -4,6 +4,7 @@ import com.mycompany.entities.Category;
 import com.mycompany.repositories.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
@@ -15,6 +16,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @TestPropertySource(properties = {
         "spring.jpa.hibernate.ddl-auto=create-drop"
 })
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 class CategoryRepositoryTests {
 
     @Autowired
