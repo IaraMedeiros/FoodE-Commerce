@@ -2,69 +2,72 @@ package com.mycompany;
 
 import com.mycompany.entities.User;
 import com.mycompany.repositories.UserRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.Optional;
-
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @ActiveProfiles("test")
-@Rollback(false)
-public class UserRepositoryTests {
-    @Autowired private UserRepository repo;
+class UserRepositoryTests {
+
+    @Autowired
+    private UserRepository repo;
 
     @Test
-    public void testAddNew() {
-        User user = new User(null, "myemail@gmail.com", "13998877513", "John Doe", "04618463512");
+    void testAddNew() {
 
-        User savedUser = repo.save(user);
+        User user = repo.save(
+                new User(null, "email@test.com", "999999", "John", "12345678901")
+        );
 
-        Assertions.assertThat(savedUser).isNotNull();
-        Assertions.assertThat(savedUser.getId()).isGreaterThan(0);
+        assertThat(user.getId()).isNotNull();
     }
 
     @Test
-    public void testListAll() {
-        Iterable<User> users = repo.findAll();
-        Assertions.assertThat(users).hasSizeGreaterThan(0);
+    void testListAll() {
 
-        for (User user : users) {
-            System.out.println(user);
-        }
+        repo.save(new User(null, "a@test.com", "111", "A", "111"));
+        repo.save(new User(null, "b@test.com", "222", "B", "222"));
+
+        assertThat(repo.findAll()).isNotEmpty();
     }
 
     @Test
-    public void testUpdate() {
-        Integer userId = 1;
-        Optional<User> optionalUser = repo.findById(userId);
-        User user = optionalUser.get();
-        user.setName("John Smithens");
+    void testUpdate() {
+
+        User user = repo.save(
+                new User(null, "old@test.com", "123", "Old", "123")
+        );
+
+        user.setName("New Name");
         repo.save(user);
 
-        User updatedUser = repo.findById(userId).get();
-        Assertions.assertThat(updatedUser.getName()).isEqualTo("John Smithens");
+        assertThat(repo.findById(user.getId()).get().getName())
+                .isEqualTo("New Name");
     }
 
     @Test
-    public void testGet() {
-        Integer userId = 2;
-        Optional<User> optionalUser = repo.findById(userId);
-        Assertions.assertThat(optionalUser).isPresent();
-        System.out.println(optionalUser.get());
+    void testGet() {
+
+        User user = repo.save(
+                new User(null, "get@test.com", "123", "Get", "123")
+        );
+
+        assertThat(repo.findById(user.getId())).isPresent();
     }
 
     @Test
-    public void testDelete() {
-        Integer userId = 3;
-        repo.deleteById(userId);
+    void testDelete() {
 
-        Optional<User> optionalUser = repo.findById(userId);
-        Assertions.assertThat(optionalUser).isNotPresent();
+        User user = repo.save(
+                new User(null, "del@test.com", "123", "Del", "123")
+        );
+
+        repo.deleteById(user.getId());
+
+        assertThat(repo.findById(user.getId())).isNotPresent();
     }
 }
