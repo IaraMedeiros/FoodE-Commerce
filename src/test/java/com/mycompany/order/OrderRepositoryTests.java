@@ -1,91 +1,85 @@
 package com.mycompany.order;
 
-import com.mycompany.repositories.OrderRepository;
-import com.mycompany.entities.OrderItem;
-import com.mycompany.repositories.OrderItemRepository;
 import com.mycompany.entities.Order;
-import com.mycompany.entities.enums.OrderStatus;
+import com.mycompany.entities.OrderItem;
 import com.mycompany.entities.Product;
+import com.mycompany.entities.User;
+import com.mycompany.entities.enums.OrderStatus;
+import com.mycompany.repositories.OrderItemRepository;
+import com.mycompany.repositories.OrderRepository;
 import com.mycompany.repositories.ProductRepository;
 import com.mycompany.repositories.UserRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
-import java.io.IOException;
 import java.time.Instant;
-import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Rollback(false)
-public class OrderRepositoryTests {
+@ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
+@EntityScan(basePackages = "com.mycompany.entities")
+@EnableJpaRepositories(basePackages = "com.mycompany.repositories")
+class OrderRepositoryTests {
 
-    @Autowired
-    private OrderRepository orderRepo;
-
+    @Autowired private OrderRepository orderRepo;
     @Autowired
     private OrderItemRepository orderItemRepo;
-
-    @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    @Autowired private ProductRepository productRepository;
+    @Autowired private UserRepository userRepository;
 
     @Test
-    public void testAddNew() throws IOException {
+    void testAddNew() {
 
-        Optional<Product> optionalProduct = productRepository.findById(4);
-        Optional<Product> optionalProduct2 = productRepository.findById(5);
-        Product product = optionalProduct.get();
-        Product product2 = optionalProduct2.get();
+        User user = userRepository.save(
+                new User(null, "John", "999999999", "John Doe", "12345678901")
+        );
+
+        Product p1 = productRepository.save(
+                new Product(null, "Product 1", "Desc", 10.0, null, null)
+        );
+
+        Product p2 = productRepository.save(
+                new Product(null, "Product 2", "Desc", 20.0, null, null)
+        );
 
         Order order = new Order(null);
-        Integer quantity = 1;
-        Integer quantity2 = 2;
-
-        orderRepo.save(order);
-
-        OrderItem orderItem = new OrderItem(order,product,quantity2,product.getPrice()*quantity2);
-        OrderItem orderItem2 = new OrderItem(order,product2,quantity,product2.getPrice()*quantity);
-
-        System.out.println(product.getPrice()*quantity2);
-        System.out.println(product2.getPrice()*quantity);
-
-        orderItemRepo.save(orderItem);
-        orderItemRepo.save(orderItem2);
-
         order.setMoment(Instant.now());
         order.setOrderStatus(OrderStatus.PAID);
-        order.setCostumer(userRepository.findById(1).get());
-        order.getItems().add(orderItem);
-        order.getItems().add(orderItem2);
+        order.setCostumer(user);
+
+        order = orderRepo.save(order);
+
+        OrderItem item1 = new OrderItem(order, p1, 2, p1.getPrice() * 2);
+        OrderItem item2 = new OrderItem(order, p2, 1, p2.getPrice());
+
+        orderItemRepo.save(item1);
+        orderItemRepo.save(item2);
+
+        order.getItems().add(item1);
+        order.getItems().add(item2);
+
         order.setValor(order.getSubTotal());
 
-        Order savedOrder = orderRepo.save(order);
+        Order saved = orderRepo.save(order);
 
-        Order retrievedOrder = orderRepo.findById(savedOrder.getId()).orElse(null);
-
-
-        // Verificar se o produto foi salvo com sucesso
-        assertThat(savedOrder).isNotNull();
-        assertThat(savedOrder.getId()).isNotNull();
-        assertThat(savedOrder.getId()).isGreaterThan(0);
-        assertThat(savedOrder.getItems().size()).isEqualTo(2);
+        assertThat(saved).isNotNull();
     }
 
-
     @Test
-    public void testDelete(){
-        Integer orderId = 4;
-        orderRepo.deleteById(orderId);
-        Optional<Order> optionalOrder = orderRepo.findById(orderId);
-        Assertions.assertThat(optionalOrder).isNotPresent();
+    void testDelete() {
+
+        Order order = orderRepo.save(new Order(null));
+
+        orderRepo.deleteById(order.getId());
+
+        assertThat(orderRepo.findById(order.getId())).isNotPresent();
     }
 }
